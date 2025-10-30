@@ -322,6 +322,18 @@ public:
 		return nullptr;
 	}
 
+	virtual BaseFactoryDefinition<T>* getDefFromType(const juce::String& type) const
+	{
+		for (auto& d : defs)
+		{
+			if (d->type == type)
+			{
+				return d;
+			}
+		}
+		return nullptr;
+	}
+
 	virtual T* create(BaseFactoryDefinition<T>* def)
 	{
 		return def->create();

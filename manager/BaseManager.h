@@ -390,6 +390,10 @@ T* BaseManager<T>::createItemFromData(juce::var data)
 			BaseFactoryDefinition<T>* def = managerFactory->getDefFromExtendedType(extendedType);
 			if (def == nullptr)
 			{
+				def = managerFactory->getDefFromType(extendedType);
+			}
+			if (def == nullptr)
+			{
 				NLOGWARNING(niceName, "Could not find definition for extendedType \"" + extendedType + "\" in factory.");
 				return nullptr;
 			}
