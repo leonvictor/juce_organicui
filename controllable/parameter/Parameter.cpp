@@ -56,6 +56,7 @@ Parameter::~Parameter()
 		MessageManagerLock mmLock(Thread::getCurrentThread());
 		if (mmLock.lockWasGained()) queuedNotifier.handleUpdateNowIfNeeded();
 		queuedNotifier.cancelPendingUpdate();
+		queuedNotifier.clearQueue();
 	}
 
 	Parameter::masterReference.clear();

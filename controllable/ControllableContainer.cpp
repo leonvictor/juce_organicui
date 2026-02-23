@@ -93,6 +93,7 @@ void ControllableContainer::clear() {
 
 	isClearing = true;
 	queuedNotifier.cancelPendingUpdate();
+	queuedNotifier.clearQueue();
 
 	for (auto& c : controllables)
 	{
@@ -792,6 +793,8 @@ bool ControllableContainer::containsContainer(ControllableContainer* cc, int max
 
 void ControllableContainer::dispatchFeedback(Controllable* c)
 {
+	if (isClearing || isBeingDestroyed) return;
+
 	controllableContainerListeners.call(&ControllableContainerListener::controllableFeedbackUpdate, this, c);
 	queuedNotifier.addMessage(new ContainerAsyncEvent(ContainerAsyncEvent::ControllableFeedbackUpdate, this, c));
 
@@ -800,6 +803,8 @@ void ControllableContainer::dispatchFeedback(Controllable* c)
 
 void ControllableContainer::dispatchState(Controllable* c)
 {
+	if (isClearing || isBeingDestroyed) return;
+
 	onControllableStateChanged(c);
 
 	controllableContainerListeners.call(&ControllableContainerListener::controllableStateUpdate, this, c);
@@ -1568,7 +1573,7 @@ var ControllableContainer::getScriptControlAddressFromScript(const var::NativeFu
 {
 	ControllableContainer* cc = getObjectFromJS<ControllableContainer>(a);
 	if (cc == nullptr) return var();
-	return "root" + cc->getControlAddress().replaceCharacter('/', '.');
+	return "root" + cc->getControlAddress().replaceCharacter('/', '.' );
 }
 
 var ControllableContainer::getContainersFromScript(const var::NativeFunctionArgs& args)
