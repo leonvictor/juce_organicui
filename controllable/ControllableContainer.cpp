@@ -1291,6 +1291,7 @@ var ControllableContainer::selectFromScript(const var::NativeFunctionArgs& a)
 var ControllableContainer::addTriggerFromScript(const var::NativeFunctionArgs& args)
 {
 	ControllableContainer* cc = getObjectFromJS<ControllableContainer>(args);
+	if (cc == nullptr) return var();
 	if (!checkNumArgs(cc->niceName, args, 2)) return var();
 
 	Controllable* c = cc->getControllableByName(args.arguments[0], true, false);
@@ -1302,6 +1303,7 @@ var ControllableContainer::addTriggerFromScript(const var::NativeFunctionArgs& a
 var ControllableContainer::addBoolParameterFromScript(const var::NativeFunctionArgs& args)
 {
 	ControllableContainer* cc = getObjectFromJS<ControllableContainer>(args);
+	if (cc == nullptr) return var();
 	if (!checkNumArgs(cc->niceName, args, 3)) return var();
 
 	Controllable* c = cc->getControllableByName(args.arguments[0], true, false);
@@ -1315,6 +1317,7 @@ var ControllableContainer::addBoolParameterFromScript(const var::NativeFunctionA
 var ControllableContainer::addIntParameterFromScript(const var::NativeFunctionArgs& args)
 {
 	ControllableContainer* cc = getObjectFromJS<ControllableContainer>(args);
+	if (cc == nullptr) return var();
 	if (!checkNumArgs(cc->niceName, args, 3)) return var();
 
 	Controllable* c = cc->getControllableByName(args.arguments[0], true, false);
@@ -1328,6 +1331,7 @@ var ControllableContainer::addIntParameterFromScript(const var::NativeFunctionAr
 var ControllableContainer::addFloatParameterFromScript(const var::NativeFunctionArgs& args)
 {
 	ControllableContainer* cc = getObjectFromJS<ControllableContainer>(args);
+	if (cc == nullptr) return var();
 	if (!checkNumArgs(cc->niceName, args, 3)) return var();
 
 	Controllable* c = cc->getControllableByName(args.arguments[0], true, false);
@@ -1341,6 +1345,7 @@ var ControllableContainer::addFloatParameterFromScript(const var::NativeFunction
 var ControllableContainer::addStringParameterFromScript(const var::NativeFunctionArgs& args)
 {
 	ControllableContainer* cc = getObjectFromJS<ControllableContainer>(args);
+	if (cc == nullptr) return var();
 	if (!checkNumArgs(cc->niceName, args, 3)) return var();
 
 	Controllable* c = cc->getControllableByName(args.arguments[0], true, false);
@@ -1354,6 +1359,7 @@ var ControllableContainer::addStringParameterFromScript(const var::NativeFunctio
 var ControllableContainer::addEnumParameterFromScript(const var::NativeFunctionArgs& args)
 {
 	ControllableContainer* cc = getObjectFromJS<ControllableContainer>(args);
+	if (cc == nullptr) return var();
 	if (!checkNumArgs(cc->niceName, args, 2)) return var();
 
 	Controllable* c = cc->getControllableByName(args.arguments[0], true, false);
@@ -1374,6 +1380,7 @@ var ControllableContainer::addEnumParameterFromScript(const var::NativeFunctionA
 var ControllableContainer::addTargetParameterFromScript(const var::NativeFunctionArgs& args)
 {
 	ControllableContainer* cc = getObjectFromJS<ControllableContainer>(args);
+	if (cc == nullptr) return var();
 	if (!checkNumArgs(cc->niceName, args, 2)) return var();
 
 	Controllable* c = cc->getControllableByName(args.arguments[0], true, false);
@@ -1393,6 +1400,7 @@ var ControllableContainer::addTargetParameterFromScript(const var::NativeFunctio
 var ControllableContainer::addColorParameterFromScript(const var::NativeFunctionArgs& args)
 {
 	ControllableContainer* cc = getObjectFromJS<ControllableContainer>(args);
+	if (cc == nullptr) return var();
 	if (!checkNumArgs(cc->niceName, args, 3)) return var();
 
 	Controllable* c = cc->getControllableByName(args.arguments[0], true, false);
@@ -1428,6 +1436,7 @@ var ControllableContainer::addColorParameterFromScript(const var::NativeFunction
 var ControllableContainer::addPoint2DParameterFromScript(const var::NativeFunctionArgs& args)
 {
 	ControllableContainer* cc = getObjectFromJS<ControllableContainer>(args);
+	if (cc == nullptr) return var();
 	if (!checkNumArgs(cc->niceName, args, 2)) return var();
 
 	Controllable* c = cc->getControllableByName(args.arguments[0], true, false);
@@ -1441,6 +1450,7 @@ var ControllableContainer::addPoint2DParameterFromScript(const var::NativeFuncti
 var ControllableContainer::addPoint3DParameterFromScript(const var::NativeFunctionArgs& args)
 {
 	ControllableContainer* cc = getObjectFromJS<ControllableContainer>(args);
+	if (cc == nullptr) return var();
 	if (!checkNumArgs(cc->niceName, args, 2)) return var();
 
 	Controllable* c = cc->getControllableByName(args.arguments[0], true, false);
@@ -1454,6 +1464,7 @@ var ControllableContainer::addPoint3DParameterFromScript(const var::NativeFuncti
 var ControllableContainer::addFileParameterFromScript(const var::NativeFunctionArgs& args)
 {
 	ControllableContainer* cc = getObjectFromJS<ControllableContainer>(args);
+	if (cc == nullptr) return var();
 	if (!checkNumArgs(cc->niceName, args, 2)) return var();
 
 	Controllable* c = cc->getControllableByName(args.arguments[0], true, false);
@@ -1468,6 +1479,7 @@ var ControllableContainer::addFileParameterFromScript(const var::NativeFunctionA
 var ControllableContainer::addAutomationFromScript(const var::NativeFunctionArgs& args)
 {
 	ControllableContainer* cc = getObjectFromJS<ControllableContainer>(args);
+	if (cc == nullptr) return var();
 	if (!checkNumArgs(cc->niceName, args, 1)) return var();
 
 	Automation* a = new Automation(args.arguments[0].toString(), nullptr, false);
@@ -1479,6 +1491,7 @@ var ControllableContainer::addAutomationFromScript(const var::NativeFunctionArgs
 var ControllableContainer::addContainerFromScript(const var::NativeFunctionArgs& args)
 {
 	ControllableContainer* cc = getObjectFromJS<ControllableContainer>(args);
+	if (cc == nullptr) return var();
 	if (!checkNumArgs(cc->niceName, args, 1)) return var();
 
 	ControllableContainer* newCC = cc->getControllableContainerByName(args.arguments[0], true, false);
@@ -1493,6 +1506,7 @@ var ControllableContainer::addContainerFromScript(const var::NativeFunctionArgs&
 var ControllableContainer::removeContainerFromScript(const var::NativeFunctionArgs& args)
 {
 	ControllableContainer* cc = getObjectFromJS<ControllableContainer>(args);
+	if (cc == nullptr) return var();
 	if (!checkNumArgs(cc->niceName, args, 1)) return var();
 
 	ControllableContainer* removeCC = cc->getControllableContainerByName(args.arguments[0], true, false);
@@ -1505,6 +1519,7 @@ var ControllableContainer::removeContainerFromScript(const var::NativeFunctionAr
 var ControllableContainer::removeControllableFromScript(const var::NativeFunctionArgs& args)
 {
 	ControllableContainer* cc = getObjectFromJS<ControllableContainer>(args);
+	if (cc == nullptr) return var();
 	if (!checkNumArgs(cc->niceName, args, 1)) return var();
 
 	Controllable* c = cc->getControllableByName(args.arguments[0], true, false);
@@ -1552,6 +1567,7 @@ var ControllableContainer::getControlAddressFromScript(const var::NativeFunction
 var ControllableContainer::getScriptControlAddressFromScript(const var::NativeFunctionArgs& a)
 {
 	ControllableContainer* cc = getObjectFromJS<ControllableContainer>(a);
+	if (cc == nullptr) return var();
 	return "root" + cc->getControlAddress().replaceCharacter('/', '.');
 }
 
@@ -1559,6 +1575,7 @@ var ControllableContainer::getContainersFromScript(const var::NativeFunctionArgs
 {
 	ControllableContainer* cc = getObjectFromJS<ControllableContainer>(args);
 
+	if (cc == nullptr) return var();
 	if (cc->isBeingDestroyed)
 	{
 		LOGWARNING("Get containers from script, container is being destroyed or badly referenced");
@@ -1578,6 +1595,7 @@ var ControllableContainer::getControllablesFromScript(const var::NativeFunctionA
 {
 	ControllableContainer* cc = getObjectFromJS<ControllableContainer>(args);
 
+	if (cc == nullptr) return var();
 	if (cc->isBeingDestroyed)
 	{
 		LOGWARNING("Get containers from script, container is being destroyed or badly referenced");
@@ -1604,12 +1622,14 @@ var ControllableContainer::getControllablesFromScript(const var::NativeFunctionA
 var ControllableContainer::getJSONDataFromScript(const var::NativeFunctionArgs& a)
 {
 	ControllableContainer* cc = getObjectFromJS<ControllableContainer>(a);
+	if (cc == nullptr) return var();
 	return cc->getJSONData(a.numArguments > 0 ? (bool)(int)a.arguments[0] : false);
 }
 
 var ControllableContainer::loadJSONDataFromScript(const var::NativeFunctionArgs& a)
 {
 	ControllableContainer* cc = getObjectFromJS<ControllableContainer>(a);
+	if (cc == nullptr) return var();
 	if (!checkNumArgs(cc->niceName, a, 1)) return false;
 	cc->loadJSONData(a.arguments[0], a.numArguments > 1 ? (bool)(int)a.arguments[1] : false);
 	return true;
