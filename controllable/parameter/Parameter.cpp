@@ -227,10 +227,30 @@ void Parameter::setRange(var min, var max)
 		maximumValue = max;
 	}
 
-	parameterListeners.call(&ParameterListener::parameterRangeChanged, this);
+
 	var arr;
-	arr.append(minimumValue); arr.append(maximumValue);
-	queuedNotifier.addMessage(new ParameterEvent(ParameterEvent::BOUNDS_CHANGED, this, arr));
+	arr.append(minimumValue);
+	arr.append(maximumValue);
+
+	if (auto* mm = MessageManager::getInstanceWithoutCreating(); mm != nullptr && !mm->isThisTheMessageThread())
+	{
+		WeakReference<Parameter> safeThis(this);
+		const auto safeRange = arr.clone();
+
+		MessageManager::callAsync([safeThis, safeRange]()
+			{
+				if (safeThis == nullptr || safeThis->isBeingDestroyed) return;
+
+				safeThis->parameterListeners.call(&ParameterListener::parameterRangeChanged, safeThis.get());
+				safeThis->queuedNotifier.addMessage(new ParameterEvent(ParameterEvent::BOUNDS_CHANGED, safeThis.get(), safeRange));
+			});
+
+	}
+	else
+	{
+		parameterListeners.call(&ParameterListener::parameterRangeChanged, this);
+		queuedNotifier.addMessage(new ParameterEvent(ParameterEvent::BOUNDS_CHANGED, this, arr));
+	}
 
 	if (isOverriden) setValue(value); //if value is outside range, this will change the value
 	else resetValue();
@@ -245,11 +265,11 @@ void Parameter::clearRange()
 	if (isComplex())
 	{
 		var minVal = var();
-		var maxVal = var(); 
-		
+		var maxVal = var();
+
 		{
 			GenericScopedLock lock(valueSetLock);
-			
+
 			for (int i = 0; i < value.size(); ++i)
 			{
 				minVal.append(INT32_MIN);
@@ -442,12 +462,12 @@ void Parameter::notifyValueChanged() {
 		const auto valueCopy = getValue();
 
 		MessageManager::callAsync([safeThis, valueCopy]()
-		{
-			if (safeThis == nullptr || safeThis->isBeingDestroyed) return;
+			{
+				if (safeThis == nullptr || safeThis->isBeingDestroyed) return;
 
-			safeThis->parameterListeners.call(&ParameterListener::parameterValueChanged, safeThis.get());
-			safeThis->queuedNotifier.addMessage(new ParameterEvent(ParameterEvent::VALUE_CHANGED, safeThis.get(), valueCopy));
-		});
+				safeThis->parameterListeners.call(&ParameterListener::parameterValueChanged, safeThis.get());
+				safeThis->queuedNotifier.addMessage(new ParameterEvent(ParameterEvent::VALUE_CHANGED, safeThis.get(), valueCopy));
+			});
 
 		return;
 	}
@@ -760,7 +780,7 @@ Parameter::ValueInterpolator::ValueInterpolator(WeakReference<Parameter> p, var 
 
 Parameter::ValueInterpolator::~ValueInterpolator()
 {
-	if(parameter != nullptr && !parameter.wasObjectDeleted()) parameter->removeInspectableListener(this);
+	if (parameter != nullptr && !parameter.wasObjectDeleted()) parameter->removeInspectableListener(this);
 
 	masterReference.clear();
 }
@@ -899,7 +919,7 @@ void Parameter::ValueInterpolator::Manager::run()
 				interpolatorMap.removeValue(i);
 				interpolators.removeObject(i);
 			}
-			
+
 			interpToRemove.clear();
 
 			double diff = Time::getMillisecondCounter() - t;
