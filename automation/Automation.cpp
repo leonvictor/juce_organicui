@@ -56,7 +56,7 @@ Automation::Automation(const String& name, AutomationRecorder* recorder, bool al
 	valueRange->setPoint(0, 1);
 
 	rangeRemapMode = addEnumParameter("Range Remap Mode", "The way of recaculating the key values when changing the range.\nAbsolute means no modification is done. Proportional means that the relative value of the key will be maintained.");
-	rangeRemapMode->addOption("Absolute", ABSOLUTE)->addOption("Proportional", PROPORTIONAL);
+	rangeRemapMode->addOption("Absolute", (int) RangeRemapMode::Absolute)->addOption("Proportional", (int) RangeRemapMode::Proportional);
 	rangeRemapMode->hideInEditor = true;
 
 	scriptObject.getDynamicObject()->setMethod("setLength", &Automation::setLengthFromScript);
@@ -524,7 +524,7 @@ void Automation::updateRange()
 		if (rangeRemapMode != nullptr)
 		{
 			RangeRemapMode rrm = rangeRemapMode->getValueDataAsEnum<RangeRemapMode>();
-			for (auto& k : items) k->setValueRange(valueRange->x, valueRange->y, rrm == PROPORTIONAL);
+			for (auto& k : items) k->setValueRange(valueRange->x, valueRange->y, rrm == RangeRemapMode::Proportional);
 		}
 	}
 	else

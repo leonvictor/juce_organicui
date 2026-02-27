@@ -31,7 +31,7 @@ public:
 	float positionUnitSteps;
 
 	AutomationRecorder* recorder;
-	enum RangeRemapMode { ABSOLUTE, PROPORTIONAL };
+	enum class RangeRemapMode { Absolute, Proportional };
 	EnumParameter* rangeRemapMode;
 
 	//Interactive simplification
